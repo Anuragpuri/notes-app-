@@ -297,7 +297,7 @@ logoutBtn && logoutBtn.addEventListener('click', ()=>{
   loginModal.classList.add('hidden');
 });
 
-// ---------- Buttons & shortcuts ----------
+
 newBtn && newBtn.addEventListener('click', createNote);
 saveBtn && saveBtn.addEventListener('click', saveActiveNote);
 deleteBtn && deleteBtn.addEventListener('click', deleteActiveNote);
@@ -309,8 +309,46 @@ searchEl && searchEl.addEventListener('input', (e)=> {
   searchTerm = e.target.value || '';
   renderList();
 });
+// mobile sidebar toggle + overlay
+(function(){
+  const toggle = document.getElementById('toggleListBtn');
+  const sidebar = document.getElementById('sidebar');
 
-// keyboard shortcuts
+  let overlay = document.querySelector('.mobile-overlay');
+  if(!overlay){
+    overlay = document.createElement('div');
+    overlay.className = 'mobile-overlay';
+    document.body.appendChild(overlay);
+  }
+
+  function openSidebar(){
+    sidebar.classList.add('open');
+    overlay.classList.add('active');
+  }
+  function closeSidebar(){
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+  }
+
+  toggle.addEventListener('click', ()=>{
+    if(window.innerWidth <= 800){
+      if(sidebar.classList.contains('open')) closeSidebar();
+      else openSidebar();
+    } else {
+      sidebar.classList.toggle('hidden-mobile');
+    }
+  });
+
+  overlay.addEventListener('click', closeSidebar);
+
+  window.addEventListener('resize', ()=>{
+    if(window.innerWidth > 800){
+      closeSidebar();
+    }
+  });
+})();
+
+
 document.addEventListener('keydown', (e)=>{
   if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's'){
     e.preventDefault();
@@ -322,7 +360,6 @@ document.addEventListener('keydown', (e)=>{
   }
 });
 
-// before unload -> save current note (last safety)
 window.addEventListener('beforeunload', (e)=>{
   try {
     if(activeId) saveActiveNote();
@@ -331,7 +368,7 @@ window.addEventListener('beforeunload', (e)=>{
   }
 });
 
-// ---------- Init ----------
+
 (function init(){
   loadNotes();
   renderUser();
@@ -341,9 +378,9 @@ window.addEventListener('beforeunload', (e)=>{
   } else {
     createNote();
   }
-  // ensure canvas sizing if draw panel present
   setTimeout(()=> {
     try{ initCanvas(); } catch(e){ console.warn('init canvas error', e); }
   }, 200);
   console.log('App initialized');
 })();
+
