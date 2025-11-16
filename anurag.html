@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Notes App — MVP (Lite)</title>
+  <link rel="stylesheet" href="anurag.css" />
+</head>
+<body>
+  <div class="animated-bg"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="logo">📝</div>
+        <div class="title">Notes</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="app">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-top">
+        <div style="display:flex;gap:8px;align-items:center;">
+          <button id="newBtn" class="btn primary">+ New Note</button>
+          <input id="search" class="search" placeholder="Search notes..." />
+        </div>
+      </div>
+
+      <ul id="notesList" class="notes-list"></ul>
+
+      <div class="sidebar-footer">
+        <small id="notesCount">0 notes</small>
+      </div>
+    </aside>
+
+    <section class="editor" id="editor">
+      <div class="editor-header">
+        <input id="noteTitle" class="note-title" placeholder="Note title..." />
+        <div class="editor-actions">
+          <label class="btn file-btn">
+            📁
+            <input type="file" id="imgUpload" accept="image/*" style="display:none" />
+          </label>
+          <button id="drawToggle" class="btn">✏️ Draw</button>
+          <button id="deleteBtn" class="btn danger">Delete</button>
+          <button id="saveBtn" class="btn save-btn">Save</button>
+          <button id="toggleListBtn" class="btn ghost">☰</button>
+        </div>
+      </div>
+
+      <div id="noteBody" class="note-body" contenteditable="true" data-placeholder="Write your note..."></div>
+
+      <div class="editor-footer">
+        <small id="lastSaved">Not saved yet</small>
+      </div>
+
+      <div id="drawPanel" class="draw-panel hidden">
+        <div class="draw-controls">
+          <button id="drawClear" class="btn">Clear</button>
+          <button id="drawSave" class="btn primary">Save Drawing</button>
+          <button id="drawClose" class="btn ghost">Close</button>
+        </div>
+        <canvas id="drawCanvas"></canvas>
+      </div>
+    </section>
+  </main>
+
+  <script src="anurag.js"></script>
+</body>
+</html>
